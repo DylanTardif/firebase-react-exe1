@@ -15,6 +15,9 @@ function Task({ id, title, description, completed }) {
 
   const handleChange = async () => {
     try {
+      await updateDoc(doc(db, "tasks", id), {
+        completed: checked,
+      });
       // à faire
       // update seulement le membre completed
       // Utiliser le state *checked*
@@ -24,8 +27,9 @@ function Task({ id, title, description, completed }) {
   };
 
   const handleDelete = async () => {
+    console.log(id.toString(id));
     try {
-      // à faire
+      await deleteDoc(doc(db, "tasks", id));
     } catch (err) {
       alert(err);
     }

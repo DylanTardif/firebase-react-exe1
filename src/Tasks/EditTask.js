@@ -12,6 +12,10 @@ function EditTask({ open, onClose, toEditTitle, toEditDescription, id }) {
     e.preventDefault();
     try {
       // À faire
+      await updateDoc(doc(db, "tasks", id), {
+        title: title,
+        description: description,
+      });
       // update seulement les membres title et description
       // Utiliser les states *title* et *description*
       onClose();

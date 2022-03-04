@@ -1,7 +1,13 @@
 import "../css/taskManager.css";
 import Task from "./Task";
 import { useState, useEffect } from "react";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  query,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import AddTask from "./AddTask";
 
@@ -14,7 +20,13 @@ function TaskManager() {
       collection(db, "tasks"),
       orderBy("created", "desc")
     );
-    onSnapshot(taskColRef);
+    onSnapshot(taskColRef, (snapshot) => {
+      const taches = [];
+      snapshot.docs.map((e) => {
+        taches.push({ id: e.id, data: e.data() });
+      });
+      setTasks(taches);
+    });
   }, []);
 
   return (
